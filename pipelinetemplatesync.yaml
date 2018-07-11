@@ -1,0 +1,36 @@
+apiVersion: devops.alauda.io/v1alpha1
+kind: PipelineTemplateSync
+metadata:
+  name: PipelineTemplateSyncForTest
+  namespace: default
+spec:
+  source:
+    git:
+      uri: "https://github.com/alauda/alauda"
+      ref: "master"
+    secret:
+      name: my-git
+    codeRepository:
+      name: github-repo
+      ref: "master"
+status:
+  # phase 包括：Draft（添加后的初始状态） Pending（同步中） Ready（同步完成） Error（无法同步）
+  # Ready 为同步完成，可能会有部分模板失败
+  phase: Pending
+  message: null
+  conditions:
+  - lastTransitionTime: null
+    lastUpdateTime: null
+    message: Sync success
+    reason: Normal
+    # 状态包括：Success、Failure、Skip（版本相同，跳过）
+    status: "Success"
+    # 类型包括：PipelineTemplate、PipelineTaskTemplate
+    type: PipelineTemplate
+    # 模板在 git 中的目录
+    target: "pipelines/alaudaBuild.yaml"
+    name: "alaudaBuildImage"
+    version: "0.1"
+  startTime: 2018-02-22T10:32:32Z
+  endTime: null
+  commitID: 8e6fc83e147f4034ec6483e0eff3bef79d4c2172
